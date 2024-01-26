@@ -6,7 +6,7 @@ import {
     TIMEZONE_HEADER,
     TIMEZONE_NAME_HEADER,
     DEFAULT_LANGUAGE,
-} from '@/common/constants';
+} from '../../common/constants';
 dotenv.config();
 
 const DEFAULT_TIMEZONE_NAME = process.env.TIMEZONE_DEFAULT_NAME;
