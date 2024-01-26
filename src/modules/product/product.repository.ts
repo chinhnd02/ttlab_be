@@ -3,7 +3,7 @@ import { Product, ProductDocument } from "../../database/schemas/product.schema"
 
 import { Injectable } from "@nestjs/common";
 import { GetProductListQuery } from "./product.interface";
-import { DEFAULT_FIRST_PAGE, DEFAULT_LIMIT_FOR_PAGINATION, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION, OrderDirection, softDeleteCondition } from "@/common/constants";
+import { DEFAULT_FIRST_PAGE, DEFAULT_LIMIT_FOR_PAGINATION, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION, OrderDirection, softDeleteCondition } from "../../common/constants";
 import { parseMongoProjection } from "../../common/helpers/commonFunctions";
 import { ProductAttributesForList } from "./product.constant";
 import { FilterQuery, Model } from 'mongoose';
