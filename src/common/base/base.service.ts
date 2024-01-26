@@ -1,4 +1,4 @@
-import { I18nKey } from '@/i18n/i18n';
+import { I18nKey } from '../../i18n/i18n';
 import { Inject, Logger } from '@nestjs/common';
 import { I18nContext, I18nService, TranslateOptions } from 'nestjs-i18n';
 import { DEFAULT_LANGUAGE } from '../constants';

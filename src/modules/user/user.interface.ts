@@ -1,9 +1,9 @@
-import { INPUT_TEXT_MAX_LENGTH } from '@/common/constants';
-import { JoiValidate } from '@/common/decorators/validator.decorator';
+import { INPUT_TEXT_MAX_LENGTH } from '../../common/constants';
+import { JoiValidate } from '../../common/decorators/validator.decorator';
 import { UserOrderBy } from './user.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import Joi from '@/plugins/joi';
-import { CommonListQuery } from '@/common/interfaces';
+import Joi from '../../plugins/joi';
+import { CommonListQuery } from '../../common/interfaces';
 import dayjs from 'dayjs';
 
 export class CreateUserDto {

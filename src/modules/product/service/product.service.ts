@@ -1,5 +1,5 @@
-import { BaseService } from "@/common/base/base.service";
-import { Product } from "@/database/schemas/product.schema";
+import { BaseService } from "../../../common/base/base.service";
+import { Product } from "../../../database/schemas/product.schema";
 import { Injectable, UploadedFile } from "@nestjs/common";
 import { ProductRepository } from "../product.repository";
 import { CreateProductDto, GetProductListQuery, UpdateProductDto } from "../product.interface";

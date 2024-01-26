@@ -1,5 +1,5 @@
-type ErrorCode = import('@/common/constants').ErrorCode;
-type I18nKey = import('@/i18n/i18n').I18nKey;
+type ErrorCode = import('../../common/constants').ErrorCode;
+type I18nKey = import('../../../i18n/i18n').I18nKey;
 type IErrorResponse = {
     key: string;
     message: string;

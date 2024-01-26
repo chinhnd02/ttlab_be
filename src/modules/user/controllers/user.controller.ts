@@ -8,8 +8,8 @@ import {
     Get,
     Query,
 } from '@nestjs/common';
-import { ErrorResponse, SuccessResponse } from '@/common/helpers/response';
-import { HttpStatus, mongoIdSchema } from '@/common/constants';
+import { ErrorResponse, SuccessResponse } from '../../../common/helpers/response';
+import { HttpStatus, mongoIdSchema } from '../../../common/constants';
 import {
     CreateUserDto,
     GetUserListQuery,
@@ -19,7 +19,7 @@ import {
     ApiResponseError,
     SwaggerApiType,
     ApiResponseSuccess,
-} from '@/common/services/swagger.service';
+} from '../../../common/services/swagger.service';
 import { ApiOperation, ApiBody, ApiTags } from '@nestjs/swagger';
 
 import {
@@ -29,13 +29,13 @@ import {
     getUserListSuccessResponseExample,
     updateUserSuccessResponseExample,
 } from '../user.swagger';
-import { TrimBodyPipe } from '@/common/pipe/trim.body.pipe';
-import { toObjectId } from '@/common/helpers/commonFunctions';
-import { BaseController } from '@/common/base/base.controller';
-import { JoiValidationPipe } from '@/common/pipe/joi.validation.pipe';
+import { TrimBodyPipe } from '../../../common/pipe/trim.body.pipe';
+import { toObjectId } from '../../../common/helpers/commonFunctions';
+import { BaseController } from '../../../common/base/base.controller';
+import { JoiValidationPipe } from '../../../common/pipe/joi.validation.pipe';
 import { UserService } from '../services/user.service';
-import { Roles } from '@/roles/roles.decorator';
-import { Role } from '@/roles/role.enum';
+import { Roles } from '../../../roles/roles.decorator';
+import { Role } from '../../../roles/role.enum';
 // import { Roles } from '@/role/roles.decorator';
 
 @ApiTags('User APIs')

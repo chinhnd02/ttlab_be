@@ -1,4 +1,4 @@
-import { I18nKey } from '@/i18n/i18n';
+import { I18nKey } from '../../i18n/i18n';
 import {
     HttpException,
     Inject,

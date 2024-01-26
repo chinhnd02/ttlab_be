@@ -1,4 +1,4 @@
-import { Product, ProductSchema } from "@/database/schemas/product.schema";
+import { Product, ProductSchema } from "../../database/schemas/product.schema";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ProductController } from "./controller/product.controller";

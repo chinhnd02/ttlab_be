@@ -1,5 +1,5 @@
-import { HttpStatus } from '@/common/constants';
-import { ApiResponse } from '@/common/helpers/response';
+import { HttpStatus } from '../../common/constants';
+import { ApiResponse } from '../../common/helpers/response';
 import {
     CallHandler,
     ExecutionContext,

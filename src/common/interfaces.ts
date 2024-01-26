@@ -11,7 +11,7 @@ import {
     OrderDirection,
 } from './constants';
 import { JoiValidate } from './decorators/validator.decorator';
-import Joi from '@/plugins/joi';
+import Joi from '.././plugins/joi';
 import { Types } from 'mongoose';
 
 export class CommonListQuery {

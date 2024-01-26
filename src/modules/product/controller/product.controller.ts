@@ -1,16 +1,15 @@
-import { BaseController } from "@/common/base/base.controller";
+import { BaseController } from "../../../common/base/base.controller";
 import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ProductService } from "../service/product.service";
-import { ApiResponseError, ApiResponseSuccess, SwaggerApiType } from "@/common/services/swagger.service";
+import { ApiResponseError, ApiResponseSuccess, SwaggerApiType } from "../../../common/services/swagger.service";
 import { createProductSuccessResponseExample, deleteProductSuccessResponseExample, getProductDetailSuccessResponseExample, getProductListSuccessResponseExample, updateProductSuccessResponseExample } from "../product.swagger";
 import { CreateProductDto, GetProductListQuery, UpdateProductDto } from "../product.interface";
-import { TrimBodyPipe } from "@/common/pipe/trim.body.pipe";
-import { JoiValidationPipe } from "@/common/pipe/joi.validation.pipe";
-import { ErrorResponse, SuccessResponse } from "@/common/helpers/response";
-import { HttpStatus, mongoIdSchema } from "@/common/constants";
-import { toObjectId } from "@/common/helpers/commonFunctions";
-import { query } from "express";
+import { TrimBodyPipe } from "../../../common/pipe/trim.body.pipe";
+import { JoiValidationPipe } from "../../../common/pipe/joi.validation.pipe";
+import { ErrorResponse, SuccessResponse } from "../../../common/helpers/response";
+import { HttpStatus, mongoIdSchema } from "../../../common/constants";
+import { toObjectId } from "../../../common/helpers/commonFunctions";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 

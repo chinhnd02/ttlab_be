@@ -1,6 +1,6 @@
-import { INPUT_TEXT_MAX_LENGTH } from "@/common/constants";
-import { JoiValidate } from "@/common/decorators/validator.decorator";
-import { CommonListQuery } from "@/common/interfaces";
+import { INPUT_TEXT_MAX_LENGTH } from "../../common/constants";
+import { JoiValidate } from "../../common/decorators/validator.decorator";
+import { CommonListQuery } from "../../common/interfaces";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import Joi from "joi";
 import { ProductOrderBy } from "./product.constant";

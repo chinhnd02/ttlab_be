@@ -5,7 +5,7 @@ import {
     TranslateOptions,
 } from 'nestjs-i18n';
 import { I18nKey } from './i18n';
-import { DEFAULT_LANGUAGE } from '@/common/constants';
+import { DEFAULT_LANGUAGE } from '../common/constants';
 
 @Injectable()
 export class I18nService {

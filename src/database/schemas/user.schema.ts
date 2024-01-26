@@ -2,7 +2,7 @@ import { Prop, Schema } from '@nestjs/mongoose';
 import { MongoBaseSchema } from './base.schema';
 import { MongoCollection } from '../utils/constants';
 import { createSchemaForClass } from '../utils/helper';
-import { Role } from '@/roles/role.enum';
+import { Role } from '../../roles/role.enum';
 export type UserDocument = SchemaDocument<User>;
 @Schema({
     timestamps: true,

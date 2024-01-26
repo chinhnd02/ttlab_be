@@ -1,5 +1,5 @@
-import { BaseRepository } from '@/common/base/base.repository';
-import { User, UserDocument } from '@/database/schemas/user.schema';
+import { BaseRepository } from '../../common/base/base.repository';
+import { User, UserDocument } from '../../database/schemas/user.schema';
 
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,8 +12,8 @@ import {
     DEFAULT_ORDER_DIRECTION,
     OrderDirection,
     softDeleteCondition,
-} from '@/common/constants';
-import { parseMongoProjection } from '@/common/helpers/commonFunctions';
+} from '../../common/constants';
+import { parseMongoProjection } from '../../common/helpers/commonFunctions';
 import { UserAttributesForList } from './user.constant';
 
 @Injectable()

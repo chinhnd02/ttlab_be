@@ -1,4 +1,4 @@
-import { BaseService } from '@/common/base/base.service';
+import { BaseService } from '../../../common/base/base.service';
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import {
@@ -7,7 +7,7 @@ import {
     UpdateUserDto,
 } from '../user.interface';
 
-import { User } from '@/database/schemas/user.schema';
+import { User } from '../../../database/schemas/user.schema';
 import { UserRepository } from '../user.repository';
 import { UserAttributesForDetail } from '../user.constant';
 
