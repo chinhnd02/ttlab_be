@@ -11,7 +11,6 @@ import { UserModule } from './modules/user/user.module';
 import { TransformInterceptor } from './modules/common/transform.interceptor';
 import { HeaderMiddleware } from './modules/middleware/header.middleware';
 import { AuthModule } from './modules/authentication/auth.module';
-import { RolesGuard } from './guard/roles.guard';
 import { ProductModule } from './modules/product/product.module';
 import { MulterModule } from '@nestjs/platform-express';
 @Module({
