@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import { AuthGuard } from "../../guard/auth.guard";
 import { Roles } from "../../roles/roles.decorator";
 import { Role } from "../../roles/role.enum";
-import { RolesGuard } from "@/guard/roles.guard";
+import { RolesGuard } from "../../guard/roles.guard";
 
 @Controller('auth')
 export class AuthController {
