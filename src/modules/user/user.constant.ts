@@ -1,4 +1,4 @@
-import { User } from 'src/database/schemas/user.schema';
+import { User } from '../../database/schemas/user.schema';
 
 export enum UserOrderBy {
     ID = 'id',
@@ -11,8 +11,17 @@ export const UserAttributesForList: (keyof User)[] = [
     'id',
     'name',
     'pass',
+    'email',
+    'birthday',
+    'phone',
+    'avatar',
     'createdAt',
     'updatedAt',
 ];
 
-export const UserAttributesForDetail: (keyof User)[] = ['_id', 'id', 'name', 'pass'];
+export const UserAttributesForDetail: (keyof User)[] = ['_id', 'id', 'name', 'pass',
+    'email',
+    'birthday',
+    'phone',
+    'avatar',
+];

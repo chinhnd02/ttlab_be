@@ -1,10 +1,9 @@
-import { INPUT_TEXT_MAX_LENGTH } from '../../common/constants';
+import { INPUT_TEXT_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '../../common/constants';
 import { JoiValidate } from '../../common/decorators/validator.decorator';
 import { UserOrderBy } from './user.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import Joi from '../../plugins/joi';
+import Joi from 'joi';
 import { CommonListQuery } from '../../common/interfaces';
-import dayjs from 'dayjs';
 
 export class CreateUserDto {
     @ApiProperty({
@@ -17,7 +16,50 @@ export class CreateUserDto {
 
     @ApiProperty({
         type: String,
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    pass: string;
+
+    @ApiProperty({
+        type: String,
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    email: string;
+
+    @ApiProperty({
+        type: Date,
+    })
+    @JoiValidate(Joi.date().required())
+    birthday: Date;
+
+    @ApiProperty({
+        type: Number,
+    })
+    @JoiValidate(Joi.number().required())
+    phone: number;
+
+    @ApiProperty({
+        type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
+        default: 'avatar',
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    avatar?: string;
+
+}
+
+export class UpdateUserDto {
+    @ApiProperty({
+        type: String,
+        maxLength: INPUT_TEXT_MAX_LENGTH,
+        default: 'User name',
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    name: string;
+
+    @ApiProperty({
+        type: String,
+        minLength: PASSWORD_MIN_LENGTH
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     pass: string;
@@ -29,18 +71,25 @@ export class CreateUserDto {
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     email: string;
 
-    // ngaysinh: dayjs
-}
+    @ApiProperty({
+        type: Date,
+    })
+    @JoiValidate(Joi.date().required())
+    birthday: Date
 
-export class UpdateUserDto {
+    @ApiProperty({
+        type: Number,
+    })
+    @JoiValidate(Joi.number().required())
+    phone: number;
+
     @ApiProperty({
         type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
-        default: 'User name',
+        default: 'avatar',
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
-    name: string;
-    pass: string;
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    avatar: string;
 }
 
 export class GetUserListQuery extends CommonListQuery {
@@ -56,12 +105,46 @@ export class GetUserListQuery extends CommonListQuery {
     )
     orderBy?: UserOrderBy;
 
+
     @ApiProperty({
         type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
-        default: "User'name for filter",
+        default: 'User name',
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
-    name?: string;
+    name: string;
+
+    @ApiProperty({
+        type: String,
+        minLength: PASSWORD_MIN_LENGTH
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
     pass: string;
+
+    @ApiProperty({
+        type: String,
+        maxLength: INPUT_TEXT_MAX_LENGTH,
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    email: string;
+
+    @ApiProperty({
+        type: Date,
+    })
+    @JoiValidate(Joi.date().optional())
+    birthday: Date
+
+    @ApiProperty({
+        type: Number,
+    })
+    @JoiValidate(Joi.number().optional())
+    phone: number;
+
+    @ApiProperty({
+        type: String,
+        maxLength: INPUT_TEXT_MAX_LENGTH,
+        default: 'avatar',
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    avatar?: string;
 }

@@ -1,5 +1,5 @@
 import { BaseController } from "../../../common/base/base.controller";
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ProductService } from "../service/product.service";
 import { ApiResponseError, ApiResponseSuccess, SwaggerApiType } from "../../../common/services/swagger.service";
@@ -12,11 +12,16 @@ import { HttpStatus, mongoIdSchema } from "../../../common/constants";
 import { toObjectId } from "../../../common/helpers/commonFunctions";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
+import { CloudinaryService } from "@/modules/cloudinary/cloudinary.service";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 @ApiTags('Product APIs')
 @Controller('product')
 export class ProductController extends BaseController {
-    constructor(private readonly productService: ProductService) {
+    constructor(
+        private readonly productService: ProductService,
+        private readonly cloudinaryService: CloudinaryService
+    ) {
         super();
     }
 
@@ -24,29 +29,33 @@ export class ProductController extends BaseController {
     @ApiResponseError([SwaggerApiType.CREATE])
     @ApiResponseSuccess(createProductSuccessResponseExample)
     @ApiBody({ type: CreateProductDto })
-    @UseInterceptors(FileInterceptor('image', {
-        storage: diskStorage({
-            // destination: './uploads',
-            filename: (req, file, cb) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-                cb(null, file.fieldname + '-' + uniqueSuffix);
-            },
-        }),
-    }))
+    @UseInterceptors(FileInterceptor('image'))
+    // @UseInterceptors(FileInterceptor('image', {
+    //     storage: diskStorage({
+    //         // destination: './uploads',
+    //         filename: (req, file, cb) => {
+    //             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    //             cb(null, file.fieldname + '-' + uniqueSuffix);
+    //         },
+    //     }),
+    // }))
     @Post()
     async createProduct(
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: CreateProductDto,
-        @UploadedFile() image: Express.Multer.File
+        @UploadedFile() image,
     ) {
         try {
-            // const imageBuffer = image.buffer;
-            // console.log(image);
-            if (image) {
-                dto.image = image.filename
+            // image.filename
+            if (image != null) {
+                // const url = ;
+                dto.image = await this.cloudinaryService.uploadImage(image);
+                // dto.image = await this.cloudinaryService.uploadImage(file)
+                // dto.image = this.productService.convertImageToBase64(image.path)
+                // console.log(image);
             }
 
-            const result = await this.productService.createProduct(dto); //file
+            const result = await this.productService.createProduct(dto);
             return new SuccessResponse(result);
         } catch (error) {
             this.handleError(error);
@@ -63,7 +72,7 @@ export class ProductController extends BaseController {
         @Param('id', new JoiValidationPipe(mongoIdSchema)) id: string,
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: UpdateProductDto,
-        image: Express.Multer.File
+        @UploadedFile() image
     ) {
         try {
             const product = await this.productService.findProductById(toObjectId(id));
@@ -78,8 +87,8 @@ export class ProductController extends BaseController {
                 )
             }
             // if(image !== null) {
-            //     const imagePath = dto.image === '' ? null : `./${dto.image}`
-            //     id(fs.exi)
+            //     await this.cloudinaryService.deleteImage(product.image)
+            //     const 
             // }
             const result = await this.productService.updateProduct(
                 toObjectId(id),
@@ -100,9 +109,9 @@ export class ProductController extends BaseController {
         @Param('id', new JoiValidationPipe(mongoIdSchema)) id: string,
     ) {
         try {
-            const user = await this.productService.findProductById(toObjectId(id));
+            const product = await this.productService.findProductById(toObjectId(id));
 
-            if (!user) {
+            if (!product) {
                 return new ErrorResponse(
                     HttpStatus.ITEM_NOT_FOUND,
                     this.translate('product.error.notFound', {
@@ -177,6 +186,9 @@ export class ProductController extends BaseController {
         // Handle the uploaded file here
         return { filename: file.filename };
     }
+
+
+
 
 
 

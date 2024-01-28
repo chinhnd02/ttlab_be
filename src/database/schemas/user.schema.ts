@@ -19,9 +19,19 @@ export class User extends MongoBaseSchema {
     name: string;
     @Prop({ required: true, type: String })
     pass: string;
+    @Prop({ required: true, type: String })
+    email: string;
+    @Prop({ required: false, default: null, type: Date })
+    birthday: Date;
+    @Prop({ required: true, type: Number })
+    phone: number;
+    @Prop({ required: true, type: String })
+    avatar: string;
 
     @Prop({ required: true })
     roles: Role[];
+
+
 }
 
 const UserSchema = createSchemaForClass(User);

@@ -14,7 +14,7 @@ export type ProductDocument = SchemaDocument<Product>;
     }
 })
 export class Product extends MongoBaseSchema {
-    @Prop({ require: true, type: String })
+    @Prop({ required: true, type: String })
     name: string;
     @Prop({ required: true, type: Number })
     price: number;

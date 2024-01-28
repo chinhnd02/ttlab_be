@@ -5,25 +5,19 @@ import { ProductRepository } from "../product.repository";
 import { CreateProductDto, GetProductListQuery, UpdateProductDto } from "../product.interface";
 import { Types } from "mongoose";
 import { ProductAttributesForDetail } from "../product.constant";
+import * as fs from 'fs';
 
 @Injectable()
 export class ProductService extends BaseService<Product, ProductRepository> {
     constructor(
-        private readonly productRepository: ProductRepository,
-        // private readonly imageService: ImageService
+        private readonly productRepository: ProductRepository
     ) {
         super(productRepository);
     }
-
-    // , image: FileUpload
     async createProduct(dto: CreateProductDto) {
         try {
-            // this.uploadFile
-            // const imagePath = this.uploadFile(dto.image)
             const product: SchemaCreateDocument<Product> = {
                 ...(dto as any),
-                // image: imagePath
-
             };
             return await this.productRepository.createOne(product);
         } catch (error) {
@@ -31,6 +25,22 @@ export class ProductService extends BaseService<Product, ProductRepository> {
             throw error;
         }
     }
+
+
+    async convertImageToBase64(filePath: string): Promise<string> {
+        try {
+            // Đọc nội dung của hình ảnh
+            const imageBuffer = fs.readFileSync(filePath);
+
+            // Mã hóa hình ảnh thành chuỗi Base64
+            const base64String = imageBuffer.toString('base64');
+
+            return base64String;
+        } catch (error) {
+            throw new Error(`Error converting image to Base64: ${error.message}`);
+        }
+    }
+
 
     async uploadFile(@UploadedFile() image) {
         console.log(image);

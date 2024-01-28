@@ -36,7 +36,6 @@ import { JoiValidationPipe } from '../../../common/pipe/joi.validation.pipe';
 import { UserService } from '../services/user.service';
 import { Roles } from '../../../roles/roles.decorator';
 import { Role } from '../../../roles/role.enum';
-// import { Roles } from '@/role/roles.decorator';
 
 @ApiTags('User APIs')
 @Controller('user')
