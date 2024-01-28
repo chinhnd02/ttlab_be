@@ -16,24 +16,28 @@ export class CreateUserDto {
 
     @ApiProperty({
         type: String,
+        default: '123123'
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     pass: string;
 
     @ApiProperty({
         type: String,
+        default: 'user@gmail.com'
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     email: string;
 
     @ApiProperty({
         type: Date,
+        default: '2002-08-08'
     })
     @JoiValidate(Joi.date().required())
     birthday: Date;
 
     @ApiProperty({
         type: Number,
+        default: 0
     })
     @JoiValidate(Joi.number().required())
     phone: number;
@@ -112,33 +116,33 @@ export class GetUserListQuery extends CommonListQuery {
         default: 'User name',
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
-    name: string;
+    name?: string;
 
     @ApiProperty({
         type: String,
         minLength: PASSWORD_MIN_LENGTH
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
-    pass: string;
+    pass?: string;
 
     @ApiProperty({
         type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
-    email: string;
+    email?: string;
 
     @ApiProperty({
         type: Date,
     })
     @JoiValidate(Joi.date().optional())
-    birthday: Date
+    birthday?: Date
 
     @ApiProperty({
         type: Number,
     })
     @JoiValidate(Joi.number().optional())
-    phone: number;
+    phone?: number;
 
     @ApiProperty({
         type: String,
