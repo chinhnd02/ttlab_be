@@ -13,7 +13,6 @@ import { toObjectId } from "../../../common/helpers/commonFunctions";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { CloudinaryService } from "@/modules/cloudinary/cloudinary.service";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 @ApiTags('Product APIs')
 @Controller('product')
