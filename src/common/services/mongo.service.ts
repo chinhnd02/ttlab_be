@@ -10,13 +10,11 @@ import ConfigKey from '../config/config-key';
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) => {
                 return {
-                    uri: configService.get<string>(
-                        ConfigKey.MONGO_DATABASE_CONNECTION_STRING,
-                    ),
+                    uri: `mongodb+srv://ducchinhcp882002:<ducchinh123>@cluster0.40211mm.mongodb.net/`
                 };
             },
         }),
     ],
     providers: [],
 })
-export class MongoModule {}
+export class MongoModule { }
