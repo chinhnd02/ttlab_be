@@ -38,7 +38,6 @@ async function bootstrap() {
                 ),
             ),
         }),
-
     });
     app.use(helmet());
     const configService = app.get(ConfigService);
