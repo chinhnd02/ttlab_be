@@ -151,7 +151,7 @@ export class UserController extends BaseController {
     @ApiOperation({ summary: 'Get User list' })
     @ApiResponseError([SwaggerApiType.GET_LIST])
     @ApiResponseSuccess(getUserListSuccessResponseExample)
-    @Roles(Role.Admin)
+    // @Roles(Role.Admin)
     @Get()
     async getUserList(
         @Query(new JoiValidationPipe())
