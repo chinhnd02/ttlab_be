@@ -10,8 +10,9 @@ import ConfigKey from '../config/config-key';
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) => {
                 return {
-                    uri: `mongodb+srv://training:<ducchinh123>@cluster0.taxzom7.mongodb.net/
-                    `
+                    uri: configService.get<string>(
+                        ConfigKey.MONGO_DATABASE_CONNECTION_STRING,
+                    ),
                 };
             },
         }),
