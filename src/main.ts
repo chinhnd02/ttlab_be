@@ -78,6 +78,6 @@ async function bootstrap() {
         SwaggerModule.setup('swagger', app, document);
     }
 
-    await app.listen(configService.get(ConfigKey.PORT));
+    await app.listen(configService.get(ConfigKey.PORT) || 3000);
 }
 bootstrap();
