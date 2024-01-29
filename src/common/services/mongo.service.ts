@@ -10,7 +10,8 @@ import ConfigKey from '../config/config-key';
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) => {
                 return {
-                    uri: `mongodb+srv://ducchinhcp882002:<ducchinh123>@cluster0.40211mm.mongodb.net/`
+                    uri: `mongodb+srv://training:<ducchinh123>@cluster0.taxzom7.mongodb.net/
+                    `
                 };
             },
         }),
