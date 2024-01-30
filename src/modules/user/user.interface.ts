@@ -4,6 +4,7 @@ import { UserOrderBy } from './user.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import Joi from 'joi';
 import { CommonListQuery } from '../../common/interfaces';
+import { IsEmail, MinLength } from 'class-validator';
 
 export class CreateUserDto {
     @ApiProperty({
@@ -18,14 +19,19 @@ export class CreateUserDto {
         type: String,
         default: '123123'
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    @JoiValidate(Joi.string().trim().min(8).max(INPUT_TEXT_MAX_LENGTH)
+        .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'))
+        .message('Mật khẩu phải chứa ít nhất một chữ cái thường, một chữ cái in hoa và một số.')
+        .required())
     pass: string;
+
 
     @ApiProperty({
         type: String,
         default: 'user@gmail.com'
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    @IsEmail()
+    @JoiValidate(Joi.string().email().message('Email không hợp lệ!').trim().max(INPUT_TEXT_MAX_LENGTH).required())
     email: string;
 
     @ApiProperty({
@@ -49,6 +55,8 @@ export class CreateUserDto {
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
     avatar?: string;
+
+
 
 }
 

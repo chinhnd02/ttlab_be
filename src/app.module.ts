@@ -25,7 +25,7 @@ import { MulterModule } from '@nestjs/platform-express';
         MongoModule,
         UserModule,
         ProductModule,
-        // AuthModule,
+        AuthModule,
         // MulterModule.register({
         //     dest: './uploads',  //Thu muc luu tru file
         // })

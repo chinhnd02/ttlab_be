@@ -67,9 +67,9 @@ export class BaseRepository<T extends MongoBaseSchema> {
         }
     }
 
-    async findOne(name: string): Promise<User | undefined> {
+    async findOne(email: string): Promise<User | undefined> {
         try {
-            return await this.model.findOne({ name })
+            return await this.model.findOne({ email })
         } catch (error) {
             this.logger.error('Error')
             throw error

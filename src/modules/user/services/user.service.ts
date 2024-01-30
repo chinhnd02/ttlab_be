@@ -50,8 +50,8 @@ export class UserService extends BaseService<User, UserRepository> {
         }
     }
 
-    async findOne(name: string): Promise<User> {
-        return this.userRepository.findOne(name)
+    async findOne(email: string): Promise<User> {
+        return this.userRepository.findOne(email)
     }
 
     async findUserById(

@@ -3,6 +3,7 @@ import { MongoBaseSchema } from './base.schema';
 import { MongoCollection } from '../utils/constants';
 import { createSchemaForClass } from '../utils/helper';
 import { Role } from '../../roles/role.enum';
+import { MinLength } from 'class-validator';
 export type UserDocument = SchemaDocument<User>;
 @Schema({
     timestamps: true,
@@ -17,9 +18,11 @@ export type UserDocument = SchemaDocument<User>;
 export class User extends MongoBaseSchema {
     @Prop({ required: true, type: String })
     name: string;
+
     @Prop({ required: true, type: String })
     pass: string;
-    @Prop({ required: true, type: String })
+
+    @Prop({ required: true, type: String, unique: true })
     email: string;
     @Prop({ required: false, default: null, type: Date })
     birthday: Date;
