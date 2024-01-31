@@ -36,6 +36,9 @@ import { JoiValidationPipe } from '../../../common/pipe/joi.validation.pipe';
 import { UserService } from '../services/user.service';
 import { Roles } from '../../../roles/roles.decorator';
 import { Role } from '../../../roles/role.enum';
+import * as bcrypt from 'bcrypt';
+
+
 
 @ApiTags('User APIs')
 @Controller('user')
@@ -54,8 +57,22 @@ export class UserController extends BaseController {
         dto: CreateUserDto,
     ) {
         try {
+            // const saltOrRounds = 10;
+            // const password = 'random_password';
+            // dto.pass = await bcrypt.hash(password, saltOrRounds);
+
+            const emailExists = await this.userService.findOne(dto.email)
+
+            if (emailExists) {
+                console.log('Email đã tồn tại');
+
+                return false;
+            }
             const result = await this.userService.createUser(dto);
             return new SuccessResponse(result);
+
+            // return false;
+
         } catch (error) {
             this.handleError(error);
         }

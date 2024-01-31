@@ -30,6 +30,7 @@ export class UserService extends BaseService<User, UserRepository> {
     }
 
 
+
     async updateUser(id: Types.ObjectId, dto: UpdateUserDto) {
         try {
             await this.userRepository.updateOneById(id, dto);
@@ -53,6 +54,8 @@ export class UserService extends BaseService<User, UserRepository> {
     async findOne(email: string): Promise<User> {
         return this.userRepository.findOne(email)
     }
+
+
 
     async findUserById(
         id: Types.ObjectId,
@@ -79,7 +82,10 @@ export class UserService extends BaseService<User, UserRepository> {
         }
     }
 
-
+    async isEmailExists(email: string) {
+        const user = await this.userRepository.findOne(email);
+        return !!user;
+    }
 
 
 }

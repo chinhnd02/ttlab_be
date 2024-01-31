@@ -10,6 +10,7 @@ import { BooleanString } from './common/constants';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import winston, { transports } from 'winston';
 import { customFormat } from './common/helpers/commonFunctions';
+import multer from 'multer';
 
 const { combine, prettyPrint, colorize, simple } = winston.format;
 
@@ -77,6 +78,8 @@ async function bootstrap() {
         const document = SwaggerModule.createDocument(app, config);
         SwaggerModule.setup('swagger', app, document);
     }
+
+    app.use(multer().any())
 
     await app.listen(configService.get(ConfigKey.PORT));
 }

@@ -20,7 +20,7 @@ export class User extends MongoBaseSchema {
     name: string;
 
     @Prop({ required: true, type: String })
-    pass: string;
+    password: string;
 
     @Prop({ required: true, type: String, unique: true })
     email: string;
@@ -28,7 +28,7 @@ export class User extends MongoBaseSchema {
     birthday: Date;
     @Prop({ required: true, type: Number })
     phone: number;
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String })
     avatar: string;
 
     @Prop({ required: true })

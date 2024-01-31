@@ -17,13 +17,13 @@ export class CreateProductDto {
     @ApiProperty({
         type: Number,
     })
-    @JoiValidate(Joi.number().required())
+    @JoiValidate(Joi.number().positive().required())
     price: number;
 
     @ApiProperty({
         type: Number,
     })
-    @JoiValidate(Joi.number().required())
+    @JoiValidate(Joi.number().positive().required())
     quantity: number;
 
     @ApiProperty({

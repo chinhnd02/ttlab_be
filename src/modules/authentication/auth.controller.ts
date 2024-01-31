@@ -12,6 +12,11 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     async signIn(@Body() signInDto: Record<string, any>) {
+
+        // const isMatch = await bcrypt.compare(signInDto.pass, dto.pass);
+        // if (!isMatch) {
+        //     return false;
+        // }
         return this.authService.signIn(signInDto.email, signInDto.pass);
     }
 

@@ -9,6 +9,9 @@ import { IsEmail, MinLength } from 'class-validator';
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 const currentDay = new Date().getDate();
+
+
+
 export class CreateUserDto {
     @ApiProperty({
         type: String,
@@ -89,7 +92,7 @@ export class UpdateUserDto {
         type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
+    @JoiValidate(Joi.string().email().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     email: string;
 
     @ApiProperty({
