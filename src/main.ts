@@ -80,7 +80,7 @@ async function bootstrap() {
         SwaggerModule.setup('swagger', app, document);
     }
 
-    app.use(multer().any())
+    // app.use(multer().any())
 
     await app.listen(configService.get(ConfigKey.PORT));
 }

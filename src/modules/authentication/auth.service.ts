@@ -2,6 +2,7 @@ import { Injectable, Type, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { SuccessResponse } from '@/common/helpers/response';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +30,7 @@ export class AuthService {
         return {
             accessToken: await this.jwtService.signAsync(payload),
         }
+        // return SuccessResponse()
 
     }
 

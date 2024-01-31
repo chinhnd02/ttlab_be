@@ -50,27 +50,27 @@ export class CloudinaryService {
             stream.end();
         });
     }
-    async deleteImage(url: string): Promise<void> {
-        const publicId = this.getPublicIdFromUrl(url);
-        console.log('publicId   :' + publicId);
-        return new Promise((resolve, reject) => {
-            cloudinary.v2.uploader.destroy(
-                'image_product/' + publicId,
-                (error, result) => {
-                    if (error) {
-                        console.log('Lỗiiiiii');
-                        reject(error);
-                    } else {
-                        console.log('Xóa thành công');
-                        resolve(result);
-                    }
-                },
-            );
-        });
-    }
-    private getPublicIdFromUrl(imageUrl: string): string | null {
-        const regex = /\/([^/]+?)\.(?:jpg|jpeg|png|gif|webp|svg)/;
-        const match = imageUrl.match(regex);
-        return match ? match[1] : null;
-    }
+    // async deleteImage(url: string): Promise<void> {
+    //     const publicId = this.getPublicIdFromUrl(url);
+    //     console.log('publicId   :' + publicId);
+    //     return new Promise((resolve, reject) => {
+    //         cloudinary.v2.uploader.destroy(
+    //             'image_product/' + publicId,
+    //             (error, result) => {
+    //                 if (error) {
+    //                     console.log('L');
+    //                     reject(error);
+    //                 } else {
+    //                     console.log('Xóa thành công');
+    //                     resolve(result);
+    //                 }
+    //             },
+    //         );
+    //     });
+    // }
+    // private getPublicIdFromUrl(imageUrl: string): string | null {
+    //     const regex = /\/([^/]+?)\.(?:jpg|jpeg|png|gif|webp|svg)/;
+    //     const match = imageUrl.match(regex);
+    //     return match ? match[1] : null;
+    // }
 }
