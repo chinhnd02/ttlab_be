@@ -32,7 +32,7 @@ export class CreateUserDto {
         .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])'))
         .message('Mật khẩu phải chứa ít nhất một chữ cái thường, một chữ cái in hoa và một số.')
         .required())
-    pass: string;
+    password: string;
 
 
     @ApiProperty({
@@ -86,7 +86,7 @@ export class UpdateUserDto {
         minLength: PASSWORD_MIN_LENGTH
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
-    pass: string;
+    password: string;
 
     @ApiProperty({
         type: String,
@@ -143,7 +143,7 @@ export class GetUserListQuery extends CommonListQuery {
         minLength: PASSWORD_MIN_LENGTH
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
-    pass?: string;
+    password?: string;
 
     @ApiProperty({
         type: String,

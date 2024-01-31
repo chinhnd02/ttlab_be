@@ -17,7 +17,7 @@ export class AuthController {
         // if (!isMatch) {
         //     return false;
         // }
-        return this.authService.signIn(signInDto.email, signInDto.pass);
+        return this.authService.signIn(signInDto.email, signInDto.password);
     }
 
     @UseGuards(AuthGuard, RolesGuard)

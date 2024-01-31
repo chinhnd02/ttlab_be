@@ -62,6 +62,7 @@ async function bootstrap() {
     };
     app.enableCors(corsOptions);
 
+
     // setup prefix of route
     app.setGlobalPrefix(configService.get(ConfigKey.BASE_PATH));
 
