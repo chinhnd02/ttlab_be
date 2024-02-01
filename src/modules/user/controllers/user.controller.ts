@@ -7,6 +7,8 @@ import {
     Delete,
     Get,
     Query,
+    UseInterceptors,
+    UploadedFile,
 } from '@nestjs/common';
 import { ErrorResponse, SuccessResponse } from '../../../common/helpers/response';
 import { HttpStatus, mongoIdSchema } from '../../../common/constants';
@@ -37,13 +39,17 @@ import { UserService } from '../services/user.service';
 import { Roles } from '../../../roles/roles.decorator';
 import { Role } from '../../../roles/role.enum';
 import * as bcrypt from 'bcrypt';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from '@/modules/cloudinary/cloudinary.service';
 
 
 
 @ApiTags('User APIs')
 @Controller('user')
 export class UserController extends BaseController {
-    constructor(private readonly userService: UserService) {
+    constructor(private readonly userService: UserService,
+        private readonly cloudinaryService: CloudinaryService
+    ) {
         super();
     }
 
@@ -51,15 +57,25 @@ export class UserController extends BaseController {
     @ApiResponseError([SwaggerApiType.CREATE])
     @ApiResponseSuccess(createUserSuccessResponseExample)
     @ApiBody({ type: CreateUserDto })
+    @UseInterceptors(FileInterceptor('avatar'))
     @Post()
     async createUser(
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: CreateUserDto,
+        @UploadedFile() avatar,
     ) {
         try {
             // const saltOrRounds = 10;
             // const password = 'random_password';
             // dto.pass = await bcrypt.hash(password, saltOrRounds);
+
+            if (avatar != null) {
+                // const url = ;
+                dto.avatar = await this.cloudinaryService.uploadImage(avatar);
+                // dto.image = await this.cloudinaryService.uploadImage(file)
+                // dto.image = this.productService.convertImageToBase64(image.path)
+                // console.log(image);
+            }
 
             const emailExists = await this.userService.findOne(dto.email)
 
