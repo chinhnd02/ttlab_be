@@ -73,4 +73,21 @@ export class CloudinaryService {
     //     const match = imageUrl.match(regex);
     //     return match ? match[1] : null;
     // }
+
+    async uploadAvatar(file: Express.Multer.File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const stream = cloudinary.v2.uploader.upload_stream(
+                { folder: 'avatar_user' },
+                (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result.secure_url);
+                    }
+                },
+            );
+            stream.write(file.buffer);
+            stream.end();
+        });
+    }
 }

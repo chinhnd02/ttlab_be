@@ -69,7 +69,7 @@ export class UserController extends BaseController {
             // dto.pass = await bcrypt.hash(password, saltOrRounds);
 
             if (avatar != null) {
-                dto.avatar = await this.cloudinaryService.uploadImage(avatar);
+                dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
             }
 
             const emailExists = await this.userService.findOne(dto.email)
