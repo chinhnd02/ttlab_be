@@ -68,9 +68,7 @@ export class UserController extends BaseController {
             // const password = 'random_password';
             // dto.pass = await bcrypt.hash(password, saltOrRounds);
 
-            if (avatar != null) {
-                dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
-            }
+
 
             const emailExists = await this.userService.findOne(dto.email)
 
@@ -78,6 +76,9 @@ export class UserController extends BaseController {
                 console.log('Email đã tồn tại');
 
                 return false;
+            }
+            if (avatar != null) {
+                dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
             }
             const result = await this.userService.createUser(dto);
             return new SuccessResponse(result);
