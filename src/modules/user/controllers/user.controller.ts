@@ -39,7 +39,7 @@ import { UserService } from '../services/user.service';
 import { Roles } from '../../../roles/roles.decorator';
 import { Role } from '../../../roles/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
-// import { CloudinaryService } from '@/modules/cloudinary/cloudinary.service';
+import { CloudinaryService } from '../../../modules/cloudinary/cloudinary.service';
 
 
 
@@ -47,7 +47,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('user')
 export class UserController extends BaseController {
     constructor(private readonly userService: UserService,
-        // private readonly cloudinaryService: CloudinaryService
+        private readonly cloudinaryService: CloudinaryService
     ) {
         super();
     }
@@ -56,12 +56,12 @@ export class UserController extends BaseController {
     @ApiResponseError([SwaggerApiType.CREATE])
     @ApiResponseSuccess(createUserSuccessResponseExample)
     @ApiBody({ type: CreateUserDto })
-    // @UseInterceptors(FileInterceptor('avatar'))
+    @UseInterceptors(FileInterceptor('avatar'))
     @Post()
     async createUser(
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: CreateUserDto,
-        // @UploadedFile() avatar,
+        @UploadedFile() avatar,
     ) {
         try {
             // const saltOrRounds = 10;
@@ -75,9 +75,9 @@ export class UserController extends BaseController {
 
                 return false;
             }
-            // if (avatar != null) {
-            //     dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
-            // }
+            if (avatar != null) {
+                dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
+            }
             const result = await this.userService.createUser(dto);
             return new SuccessResponse(result);
 
