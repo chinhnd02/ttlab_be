@@ -10,15 +10,16 @@ import { FilterQuery, Model } from 'mongoose';
 import { InjectModel } from "@nestjs/mongoose";
 
 @Injectable()
-export class ProductRepository extends BaseRepository<Product> {
+export class ProductRepository extends BaseRepository<Product>{
     constructor(
         @InjectModel(Product.name)
         private readonly productModel: Model<ProductDocument>,
     ) {
-        super(productModel)
+        super(productModel);
     }
 
-    async fillAllAndCountProductByQuery(query: GetProductListQuery) {
+
+    async findAllAndCountProductByQuery(query: GetProductListQuery) {
         try {
             const {
                 keyword = '',
@@ -26,9 +27,8 @@ export class ProductRepository extends BaseRepository<Product> {
                 limit = +DEFAULT_LIMIT_FOR_PAGINATION,
                 orderBy = DEFAULT_ORDER_BY,
                 orderDirection = DEFAULT_ORDER_DIRECTION,
-                name = '',
+                // name = '',
             } = query;
-
             const matchQuery: FilterQuery<Product> = {};
             matchQuery.$and = [
                 {
@@ -42,11 +42,11 @@ export class ProductRepository extends BaseRepository<Product> {
                 });
             }
 
-            if (name) {
-                matchQuery.$and.push({
-                    name,
-                });
-            }
+            // if (name) {
+            //     matchQuery.$and.push({
+            //         name,
+            //     });
+            // }
 
             const [result] = await this.productModel.aggregate([
                 {

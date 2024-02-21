@@ -26,13 +26,13 @@ type SchemaAttribute<T> = keyof T;
 
 type ValidatorResult<E = ErrorResponse, R = any> =
     | {
-          success: false;
-          error: E;
-      }
+        success: false;
+        error: E;
+    }
     | {
-          success: true;
-          data: R;
-      };
+        success: true;
+        data: R;
+    };
 
 type ExtractValidationResult<T> = T extends { success: true; data: infer R }
     ? R
@@ -51,18 +51,18 @@ type TFunction<T> = (...args: any[]) => T;
 
 type AsyncReturnTypes<T> = {
     readonly [K in keyof T]: T[K] extends AsyncFunction<infer R>
-        ? R
-        : T[K] extends TFunction<infer X>
-          ? X
-          : never;
+    ? R
+    : T[K] extends TFunction<infer X>
+    ? X
+    : never;
 };
 
 type AsyncReturnValidationResultTypes<T> = {
     readonly [K in keyof T]: T[K] extends AsyncFunction<infer R1>
-        ? ExtractValidationResult<R1>
-        : T[K] extends TFunction<infer R2>
-          ? ExtractValidationResult<R2>
-          : never;
+    ? ExtractValidationResult<R1>
+    : T[K] extends TFunction<infer R2>
+    ? ExtractValidationResult<R2>
+    : never;
 };
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;

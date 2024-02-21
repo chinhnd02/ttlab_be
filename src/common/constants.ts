@@ -12,7 +12,7 @@ export enum OrderDirection {
 
 export enum OrderBy {
     ID = '_id',
-    CREATED_AT = 'createdAt',
+    CREATED_AT = 'created_at',
     UPDATED_AT = 'updatedAt',
 }
 

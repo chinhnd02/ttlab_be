@@ -30,15 +30,6 @@ export class ProductController extends BaseController {
     @ApiResponseSuccess(createProductSuccessResponseExample)
     @ApiBody({ type: CreateProductDto })
     @UseInterceptors(FileInterceptor('image'))
-    // @UseInterceptors(FileInterceptor('image', {
-    //     storage: diskStorage({
-    //         // destination: './uploads',
-    //         filename: (req, file, cb) => {
-    //             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    //             cb(null, file.fieldname + '-' + uniqueSuffix);
-    //         },
-    //     }),
-    // }))
     @Post()
     async createProduct(
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
@@ -60,6 +51,7 @@ export class ProductController extends BaseController {
         } catch (error) {
             this.handleError(error);
         }
+
     }
 
     @ApiOperation({ summary: 'Update Product by id' })
@@ -72,8 +64,9 @@ export class ProductController extends BaseController {
         @Param('id', new JoiValidationPipe(mongoIdSchema)) id: string,
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: UpdateProductDto,
-        @UploadedFile() image
     ) {
+        // console.log(dto);
+
         try {
             const product = await this.productService.findProductById(toObjectId(id));
             if (!product) {
@@ -86,10 +79,6 @@ export class ProductController extends BaseController {
                     })
                 )
             }
-            // if(image !== null) {
-            //     await this.cloudinaryService.deleteImage(product.image)
-            //     const 
-            // }
             const result = await this.productService.updateProduct(
                 toObjectId(id),
                 dto,
@@ -160,7 +149,7 @@ export class ProductController extends BaseController {
     @ApiResponseSuccess(getProductListSuccessResponseExample)
     @Get()
     async getProductList(
-        @Query(new JoiValidationPipe())
+        @Query()
         query: GetProductListQuery,
     ) {
         try {

@@ -83,7 +83,7 @@ export class ProductService extends BaseService<Product, ProductRepository> {
 
     async findAllAndCountProductByQuery(query: GetProductListQuery) {
         try {
-            const result = await this.productRepository.fillAllAndCountProductByQuery(query);
+            const result = await this.productRepository.findAllAndCountProductByQuery(query);
             return result;
         } catch (error) {
             this.logger.error(
