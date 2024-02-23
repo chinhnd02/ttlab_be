@@ -19,11 +19,15 @@
         {
             "src": "/(.*)",
             "dest": "src/main.ts",
-            "methods": ["*"]
-        },
-        {
-            "src": "/(.*)",
-            "dest": "dist/main.js"
+            "methods": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS",
+                "HEAD"
+            ]
         }
     ]
 }
