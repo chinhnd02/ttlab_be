@@ -26,4 +26,9 @@ export class AuthController {
     async getProfile(@Request() req) {
         return req.user
     }
+
+    @Post('refreshToken')
+    async refresh(@Body() signInDto: Record<string, any>) {
+        return this.authService.refreshToken(signInDto.refresh_token)
+    }
 }

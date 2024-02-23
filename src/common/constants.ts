@@ -109,6 +109,13 @@ export const CommonListQuerySchema = {
         .optional(),
 };
 
+export const jwtConstants = {
+    secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
+    expiresIn: 200,
+    refresh_expiresIn: 1000,
+};
+
+
 export enum HttpStatus {
     OK = 200,
     BAD_REQUEST = 400,

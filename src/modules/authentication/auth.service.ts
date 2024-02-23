@@ -3,6 +3,7 @@ import { UserService } from '../user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { SuccessResponse } from '@/common/helpers/response';
+import { jwtConstants } from '@/common/constants'
 
 @Injectable()
 export class AuthService {
@@ -14,24 +15,52 @@ export class AuthService {
     async signIn(email: string, pw: string): Promise<any> {
         const user = await this.userService.findOne(email);
         // const isMatch = await bcrypt.compare(pw, user.pass);
-        if (user?.password !== pw) {
-            throw new UnauthorizedException();
+        if (!user) {
+            return null;
         }
-        // if (isMatch) {
 
-        // }
+
+        if (user?.password !== pw) {
+            throw new UnauthorizedException('Login Failure!');
+        }
+
         const payload = {
             sub: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
         }
-        // console.log(isMatch);
 
+        const access_token = await this.jwtService.signAsync(payload)
+        const refresh_token = await this.jwtService.signAsync(payload)
+
+        // return {
+        //     accessToken: await this.jwtService.signAsync(payload),
+        // }
         return {
-            accessToken: await this.jwtService.signAsync(payload),
+            accessToken: access_token,
+            refreshToken: refresh_token
         }
-        // return SuccessResponse()
 
+    }
+
+    async refreshToken(token) {
+        try {
+            const tk = await this.jwtService.verify(token, {
+                secret: jwtConstants.secret,
+            });
+            const access_token = await this.jwtService.signAsync(tk, {
+                secret: jwtConstants.secret,
+                expiresIn: jwtConstants.expiresIn
+            })
+            return {
+                access_token: access_token,
+                expiresIn: jwtConstants.expiresIn,
+            }
+        }
+
+        catch (error) {
+            throw new UnauthorizedException("Login Again")
+        }
     }
 
 }
