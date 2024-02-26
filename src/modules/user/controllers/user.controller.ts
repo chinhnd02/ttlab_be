@@ -179,7 +179,7 @@ export class UserController extends BaseController {
     @Roles(Role.Admin)
     @Get()
     async getUserList(
-        @Query(new JoiValidationPipe())
+        @Query()
         query: GetUserListQuery,
     ) {
         try {

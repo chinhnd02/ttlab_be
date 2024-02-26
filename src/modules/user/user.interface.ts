@@ -68,6 +68,14 @@ export class CreateUserDto {
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
     avatar?: string;
 
+    @ApiProperty({
+        type: String,
+        maxLength: INPUT_TEXT_MAX_LENGTH,
+        default: 'avatar',
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    roles?: string;
+
 
 
 }
@@ -112,7 +120,7 @@ export class UpdateUserDto {
         maxLength: INPUT_TEXT_MAX_LENGTH,
         default: 'avatar',
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
     avatar: string;
 }
 
