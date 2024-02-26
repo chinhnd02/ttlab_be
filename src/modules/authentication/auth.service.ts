@@ -31,13 +31,17 @@ export class AuthService {
 
         const access_token = await this.jwtService.signAsync(payload)
         const refresh_token = await this.jwtService.signAsync(payload)
+        const expiresIn = await this.jwtService.signAsync(payload, {
+            expiresIn: jwtConstants.expiresIn
+        })
 
         // return {
         //     accessToken: await this.jwtService.signAsync(payload),
         // }
         return {
             accessToken: access_token,
-            refreshToken: refresh_token
+            refreshToken: refresh_token,
+            expiresIn: expiresIn
         }
 
     }

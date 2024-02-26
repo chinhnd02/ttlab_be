@@ -69,6 +69,7 @@ export class ProductService extends BaseService<Product, ProductRepository> {
         }
     }
 
+
     async findProductById(
         id: Types.ObjectId,
         attributes: (keyof Product)[] = ProductAttributesForDetail,

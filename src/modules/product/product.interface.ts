@@ -77,8 +77,8 @@ export class UpdateProductDto {
         maxLength: INPUT_TEXT_MAX_LENGTH,
         default: 'image',
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
-    image: string;
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    image?: string;
 }
 
 export class GetProductListQuery extends CommonListQuery {

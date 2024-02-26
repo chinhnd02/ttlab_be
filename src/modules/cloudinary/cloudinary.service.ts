@@ -26,7 +26,7 @@
 // }
 
 
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as cloudinary from 'cloudinary';
 import { cloudinaryConfig } from './clould.config';
 
@@ -89,5 +89,27 @@ export class CloudinaryService {
             stream.write(file.buffer);
             stream.end();
         });
+    }
+
+    async deleteImageByUrl(imageUrl: string): Promise<boolean> {
+        try {
+            const publicIdMatch = imageUrl.split('/').pop();
+            const publicId = publicIdMatch ? publicIdMatch.split('.')[0] : null;
+
+            if (!publicId) {
+                throw new BadRequestException('Invalid Cloudinary image URL.');
+            }
+
+            const result = await cloudinary.v2.uploader.destroy(publicId);
+
+            if (result.result !== 'ok') {
+                throw new BadRequestException('Failed to delete image from Cloudinary.');
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error deleting image from Cloudinary:', error);
+            return false;
+        }
     }
 }

@@ -64,11 +64,14 @@ export class ProductController extends BaseController {
         @Param('id', new JoiValidationPipe(mongoIdSchema)) id: string,
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: UpdateProductDto,
+        @UploadedFile() image,
     ) {
         // console.log(dto);
 
         try {
             const product = await this.productService.findProductById(toObjectId(id));
+
+
             if (!product) {
                 return new ErrorResponse(
                     HttpStatus.ITEM_NOT_FOUND,
@@ -79,6 +82,13 @@ export class ProductController extends BaseController {
                     })
                 )
             }
+            if (image != null) {
+                if (product.image !== '') {
+                    this.cloudinaryService.deleteImageByUrl(product.image)
+                }
+            }
+            image != null ? dto.image = await this.cloudinaryService.uploadImage(image) : dto.image = product.image
+
             const result = await this.productService.updateProduct(
                 toObjectId(id),
                 dto,
