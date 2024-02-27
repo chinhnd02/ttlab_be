@@ -13,16 +13,12 @@ import { PassportModule } from "@nestjs/passport";
         JwtModule.register({
             global: true,
             secret: jwtConstants.secret,
-            signOptions: { expiresIn: '10000s' },
+            signOptions: { expiresIn: '100s' },
         }),
 
     ],
     providers: [
         AuthService,
-        // {
-        //     provide: APP_GUARD,
-        //     useClass: AuthGuard
-        // }
 
     ],
     controllers: [AuthController],

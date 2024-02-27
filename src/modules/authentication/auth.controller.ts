@@ -17,6 +17,9 @@ export class AuthController {
         // if (!isMatch) {
         //     return false;
         // }
+
+
+
         return this.authService.signIn(signInDto.email, signInDto.password);
     }
 
@@ -29,6 +32,8 @@ export class AuthController {
 
     @Post('refreshToken')
     async refresh(@Body() signInDto: Record<string, any>) {
-        return this.authService.refreshToken(signInDto.refresh_token)
+        console.log(signInDto.refreshToken);
+
+        return this.authService.refreshToken(signInDto.refreshToken)
     }
 }

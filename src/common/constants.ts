@@ -111,8 +111,8 @@ export const CommonListQuerySchema = {
 
 export const jwtConstants = {
     secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
-    expiresIn: 200,
-    refresh_expiresIn: 1000,
+    expiresIn: 120,
+    refresh_expiresIn: 300,
 };
 
 

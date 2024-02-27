@@ -13,13 +13,11 @@ export class AuthService {
 
     async signIn(email: string, pw: string): Promise<any> {
         const user = await this.userService.findOne(email);
-        // const isMatch = await bcrypt.compare(pw, user.pass);
         if (!user) {
             return null;
         }
 
-
-        if (user?.password !== pw) {
+        if (user?.password !== pw && user.deletedAt) {
             throw new UnauthorizedException('Login Failure!');
         }
 
@@ -29,11 +27,15 @@ export class AuthService {
             email: user.email,
         }
 
-        const access_token = await this.jwtService.signAsync(payload)
-        const refresh_token = await this.jwtService.signAsync(payload)
-        const expiresIn = await this.jwtService.signAsync(payload, {
+        const access_token = await this.jwtService.signAsync(payload, {
+            secret: jwtConstants.secret,
             expiresIn: jwtConstants.expiresIn
         })
+        const refresh_token = await this.jwtService.signAsync(payload, {
+            secret: jwtConstants.secret,
+            expiresIn: jwtConstants.refresh_expiresIn
+        })
+        const expiresIn = jwtConstants.expiresIn
 
         // return {
         //     accessToken: await this.jwtService.signAsync(payload),
@@ -48,21 +50,33 @@ export class AuthService {
 
     async refreshToken(token) {
         try {
-            const tk = await this.jwtService.verify(token, {
+            const refresh = await this.jwtService.verify(token, {
                 secret: jwtConstants.secret,
             });
-            const access_token = await this.jwtService.signAsync(tk, {
+            const new_token = await this.jwtService.signAsync(
+                refresh, {
                 secret: jwtConstants.secret,
-                expiresIn: jwtConstants.expiresIn
-            })
-            return {
-                access_token: access_token,
                 expiresIn: jwtConstants.expiresIn,
             }
-        }
-
-        catch (error) {
-            throw new UnauthorizedException("Login Again")
+            )
+            const refresh_token = await this.jwtService.signAsync(
+                refresh, {
+                secret: jwtConstants.secret,
+                expiresIn: jwtConstants.refresh_expiresIn
+            }
+            )
+            return {
+                accessToken: {
+                    token: new_token,
+                    expriesIn: jwtConstants.expiresIn
+                },
+                refreshToken: {
+                    token: refresh_token,
+                    expriesIn: jwtConstants.refresh_expiresIn
+                }
+            }
+        } catch (e) {
+            throw new UnauthorizedException('Dang nhap lai')
         }
     }
 

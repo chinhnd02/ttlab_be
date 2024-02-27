@@ -9,6 +9,7 @@ import {
     Query,
     UseInterceptors,
     UploadedFile,
+    UseGuards,
 } from '@nestjs/common';
 import { ErrorResponse, SuccessResponse } from '../../../common/helpers/response';
 import { HttpStatus, mongoIdSchema } from '../../../common/constants';
@@ -40,6 +41,8 @@ import { Roles } from '../../../roles/roles.decorator';
 import { Role } from '../../../roles/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from '../../../modules/cloudinary/cloudinary.service';
+import { AuthGuard } from "../../../guard/auth.guard";
+import { RolesGuard } from "../../../guard/roles.guard";
 
 
 
@@ -185,7 +188,8 @@ export class UserController extends BaseController {
     @ApiOperation({ summary: 'Get User list' })
     @ApiResponseError([SwaggerApiType.GET_LIST])
     @ApiResponseSuccess(getUserListSuccessResponseExample)
-    @Roles(Role.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
+    // @Roles(Role.Admin)
     @Get()
     async getUserList(
         @Query()

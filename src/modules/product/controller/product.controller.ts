@@ -1,5 +1,5 @@
 import { BaseController } from "../../../common/base/base.controller";
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ProductService } from "../service/product.service";
 import { ApiResponseError, ApiResponseSuccess, SwaggerApiType } from "../../../common/services/swagger.service";
@@ -13,6 +13,8 @@ import { toObjectId } from "../../../common/helpers/commonFunctions";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { CloudinaryService } from "../../../modules/cloudinary/cloudinary.service";
+import { AuthGuard } from "../../../guard/auth.guard";
+import { RolesGuard } from "../../../guard/roles.guard";
 // import { CloudinaryService } from "../../../modules/cloudinary/cloudinary.service";
 
 @ApiTags('Product APIs')
@@ -157,6 +159,7 @@ export class ProductController extends BaseController {
     @ApiOperation({ summary: 'Get Product list' })
     @ApiResponseError([SwaggerApiType.GET_LIST])
     @ApiResponseSuccess(getProductListSuccessResponseExample)
+    @UseGuards(AuthGuard, RolesGuard)
     @Get()
     async getProductList(
         @Query()
