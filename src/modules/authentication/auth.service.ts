@@ -14,8 +14,8 @@ export class AuthService {
 
     async signIn(email: string, pw: string): Promise<any> {
         const user = await this.userService.findOne(email);
-        if (!user) {
-            return null;
+        if (!user.email) {
+            throw new UnauthorizedException('Sai Email')
         }
 
         if (user.deletedAt) {
@@ -25,8 +25,12 @@ export class AuthService {
 
         if (user?.password !== pw) {
 
-            throw new UnauthorizedException('Login Failure!');
+            throw new UnauthorizedException('Sai password');
         }
+        // if (user?.email) {
+        //     throw new UnauthorizedException('Sai email');
+        // }
+
         const payload = {
             sub: user._id,
             name: user.name,
