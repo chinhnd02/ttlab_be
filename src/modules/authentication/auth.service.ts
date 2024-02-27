@@ -3,6 +3,7 @@ import { UserService } from '../user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../../common/constants'
+import { ExceptionHandler } from 'winston';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +18,15 @@ export class AuthService {
             return null;
         }
 
-        if (user?.password !== pw && user.deletedAt) {
-            throw new UnauthorizedException('Login Failure!');
+        if (user.deletedAt) {
+            throw new UnauthorizedException('Email không tồn tại');
+
         }
 
+        if (user?.password !== pw) {
+
+            throw new UnauthorizedException('Login Failure!');
+        }
         const payload = {
             sub: user._id,
             name: user.name,

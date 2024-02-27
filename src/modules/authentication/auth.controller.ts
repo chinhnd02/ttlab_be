@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, HttpCode, UseGuards, Get, Request } from "@nestjs/common";
+import { Body, Controller, HttpStatus, Post, HttpCode, UseGuards, Get, Request, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "../../guard/auth.guard";
 import { Roles } from "../../roles/roles.decorator";
@@ -12,13 +12,6 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     async signIn(@Body() signInDto: Record<string, any>) {
-
-        // const isMatch = await bcrypt.compare(signInDto.pass, dto.pass);
-        // if (!isMatch) {
-        //     return false;
-        // }
-
-
 
         return this.authService.signIn(signInDto.email, signInDto.password);
     }
