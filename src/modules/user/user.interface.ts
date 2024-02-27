@@ -120,8 +120,8 @@ export class UpdateUserDto {
         maxLength: INPUT_TEXT_MAX_LENGTH,
         default: 'avatar',
     })
-    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).required())
-    avatar: string;
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    avatar?: string;
 }
 
 export class GetUserListQuery extends CommonListQuery {

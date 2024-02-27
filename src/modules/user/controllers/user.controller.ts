@@ -90,11 +90,13 @@ export class UserController extends BaseController {
     @ApiResponseError([SwaggerApiType.UPDATE])
     @ApiResponseSuccess(updateUserSuccessResponseExample)
     @ApiBody({ type: UpdateUserDto })
+    @UseInterceptors(FileInterceptor('avatar'))
     @Patch(':id')
     async updateUser(
         @Param('id', new JoiValidationPipe(mongoIdSchema)) id: string,
         @Body(new TrimBodyPipe(), new JoiValidationPipe())
         dto: UpdateUserDto,
+        @UploadedFile() avatar,
     ) {
         try {
             const user = await this.userService.findUserById(toObjectId(id));
@@ -108,6 +110,13 @@ export class UserController extends BaseController {
                     }),
                 );
             }
+            if (avatar != null) {
+                if (user.avatar !== '') {
+                    this.cloudinaryService.deleteImageByUrl(user.avatar)
+                }
+            }
+            avatar != null ? dto.avatar = await this.cloudinaryService.uploadAvatar(avatar) : dto.avatar = user.avatar
+
 
             const result = await this.userService.updateUser(
                 toObjectId(id),
