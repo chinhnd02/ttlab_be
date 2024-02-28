@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../../common/constants'
 import { ExceptionHandler } from 'winston';
+import { User } from '../../database/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -23,13 +24,19 @@ export class AuthService {
 
         }
 
-        if (user?.password !== pw) {
+        // if (user?.password !== pw) {
 
-            throw new UnauthorizedException('Sai password');
-        }
-        // if (user?.email) {
-        //     throw new UnauthorizedException('Sai email');
+        //     throw new UnauthorizedException('Sai password');
         // }
+
+        const matchPassword = await bcrypt.compare(pw, user.password)
+        if (!matchPassword) {
+            console.log(pw);
+            console.log(user.password);
+            console.log(matchPassword);
+            throw new UnauthorizedException('Sai Password');
+        }
+
 
         const payload = {
             sub: user._id,

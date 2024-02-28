@@ -4,6 +4,8 @@ import { AuthGuard } from "../../guard/auth.guard";
 import { Roles } from "../../roles/roles.decorator";
 import { Role } from "../../roles/role.enum";
 import { RolesGuard } from "../../guard/roles.guard";
+import * as bcrypt from 'bcrypt';
+import { User } from "@/database/schemas/user.schema";
 
 @Controller('auth')
 export class AuthController {
@@ -13,6 +15,8 @@ export class AuthController {
     @Post('login')
     async signIn(@Body() signInDto: Record<string, any>) {
 
+
+        // const matchPassword = await bcrypt.compare(signInDto.password, )
 
 
         return this.authService.signIn(signInDto.email, signInDto.password);

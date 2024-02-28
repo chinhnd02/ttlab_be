@@ -43,6 +43,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from '../../../modules/cloudinary/cloudinary.service';
 import { AuthGuard } from "../../../guard/auth.guard";
 import { RolesGuard } from "../../../guard/roles.guard";
+import * as bcrypt from 'bcrypt';
 
 
 
@@ -67,9 +68,9 @@ export class UserController extends BaseController {
         @UploadedFile() avatar,
     ) {
         try {
-            // const saltOrRounds = 10;
+            const saltOrRounds = 10;
             // const password = 'random_password';
-            // dto.pass = await bcrypt.hash(password, saltOrRounds);
+            dto.password = await bcrypt.hash(dto.password, saltOrRounds);
 
             const emailExists = await this.userService.findOne(dto.email)
 
@@ -81,6 +82,7 @@ export class UserController extends BaseController {
             if (avatar != null) {
                 dto.avatar = await this.cloudinaryService.uploadAvatar(avatar);
             }
+
             const result = await this.userService.createUser(dto);
             return new SuccessResponse(result);
 
