@@ -122,6 +122,9 @@ export class UserController extends BaseController {
             }
             avatar != null ? dto.avatar = await this.cloudinaryService.uploadAvatar(avatar) : dto.avatar = user.avatar
 
+            const saltOrRounds = 10;
+            // const password = 'random_password';
+            dto.password = await bcrypt.hash(dto.password, saltOrRounds);
 
             const result = await this.userService.updateUser(
                 toObjectId(id),
