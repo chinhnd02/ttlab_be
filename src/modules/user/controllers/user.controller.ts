@@ -124,7 +124,7 @@ export class UserController extends BaseController {
 
             const saltOrRounds = 10;
             // const password = 'random_password';
-            dto.password = await bcrypt.hash(dto.password, saltOrRounds);
+            // dto.password = await bcrypt.hash(dto.password, saltOrRounds);
 
             const result = await this.userService.updateUser(
                 toObjectId(id),
