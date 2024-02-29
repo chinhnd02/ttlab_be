@@ -122,6 +122,14 @@ export class UpdateUserDto {
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
     avatar?: string;
+
+    @ApiProperty({
+        type: String,
+        maxLength: INPUT_TEXT_MAX_LENGTH,
+        default: 'role',
+    })
+    @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
+    roles?: string;
 }
 
 export class GetUserListQuery extends CommonListQuery {
