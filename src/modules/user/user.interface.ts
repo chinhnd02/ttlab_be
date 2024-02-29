@@ -71,7 +71,7 @@ export class CreateUserDto {
     @ApiProperty({
         type: String,
         maxLength: INPUT_TEXT_MAX_LENGTH,
-        default: 'avatar',
+        default: 'role',
     })
     @JoiValidate(Joi.string().trim().max(INPUT_TEXT_MAX_LENGTH).optional())
     roles?: string;

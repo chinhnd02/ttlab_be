@@ -42,6 +42,7 @@ export class AuthService {
             sub: user._id,
             name: user.name,
             email: user.email,
+            role: user.roles
         }
 
         const access_token = await this.jwtService.signAsync(payload, {
@@ -53,6 +54,8 @@ export class AuthService {
             expiresIn: jwtConstants.refresh_expiresIn
         })
         const expiresIn = jwtConstants.expiresIn
+        const role = user.roles
+        const avatar = user.avatar
 
         // return {
         //     accessToken: await this.jwtService.signAsync(payload),
@@ -60,7 +63,9 @@ export class AuthService {
         return {
             accessToken: access_token,
             refreshToken: refresh_token,
-            expiresIn: expiresIn
+            expiresIn: expiresIn,
+            role: role,
+            avatar: avatar
         }
 
     }

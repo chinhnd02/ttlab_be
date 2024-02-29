@@ -31,8 +31,8 @@ export class User extends MongoBaseSchema {
     @Prop({ required: false, type: String })
     avatar: string;
 
-    @Prop({ required: true })
-    roles: Role[];
+    @Prop({ type: String })
+    roles: string;
 
 
 }
