@@ -5,6 +5,8 @@ import * as bcrypt from 'bcrypt';
 import { jwtConstants } from '../../common/constants'
 import { ExceptionHandler } from 'winston';
 import { User } from '../../database/schemas/user.schema';
+import { parseDate } from '@/plugins/dayjs';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +22,7 @@ export class AuthService {
         }
 
         if (user.deletedAt) {
-            throw new UnauthorizedException('Email không tồn tại');
+            throw new UnauthorizedException('Tài khoản đã bị xóa');
 
         }
 
@@ -54,6 +56,7 @@ export class AuthService {
             expiresIn: jwtConstants.refresh_expiresIn
         })
         const expiresIn = jwtConstants.expiresIn
+        const refresh_expiresIn = jwtConstants.refresh_expiresIn
         const role = user.roles
         const avatar = user.avatar
 
@@ -64,6 +67,7 @@ export class AuthService {
             accessToken: access_token,
             refreshToken: refresh_token,
             expiresIn: expiresIn,
+            refreshExpiresIn: refresh_expiresIn,
             role: role,
             avatar: avatar
         }
@@ -72,34 +76,81 @@ export class AuthService {
 
     async refreshToken(token) {
         try {
-            const refresh = await this.jwtService.verify(token, {
-                secret: jwtConstants.secret,
-            });
-            const new_token = await this.jwtService.signAsync(
-                refresh, {
+
+            const { sub, name, email, role } = await this.jwtService.verify(token, {
+                secret: jwtConstants.secret
+            })
+
+            const payload = {
+                sub, name, email, role
+            };
+
+            const newAccessToken = await this.jwtService.signAsync(payload, {
                 secret: jwtConstants.secret,
                 expiresIn: jwtConstants.expiresIn,
-            }
-            )
-            const refresh_token = await this.jwtService.signAsync(
-                refresh, {
+            });
+
+            const newRefreshToken = await this.jwtService.signAsync(payload, {
                 secret: jwtConstants.secret,
                 expiresIn: jwtConstants.refresh_expiresIn
-            }
-            )
+            })
+            const expiresIn = jwtConstants.expiresIn
+            const refresh_expiresIn = jwtConstants.refresh_expiresIn
             return {
-                accessToken: {
-                    token: new_token,
-                    expriesIn: jwtConstants.expiresIn
-                },
-                refreshToken: {
-                    token: refresh_token,
-                    expriesIn: jwtConstants.refresh_expiresIn
-                }
+                newAccessToken: newAccessToken,
+                newRefreshToken: newRefreshToken,
+                expiresIn: expiresIn,
+                refreshExpiresIn: refresh_expiresIn,
             }
         } catch (e) {
             throw new UnauthorizedException('Dang nhap lai')
         }
+
+
     }
+
+    async verifyToken(token: string) {
+        try {
+            return await jwt.verify(token, jwtConstants.secret);
+        } catch (error) {
+            return null;
+        }
+    }
+
+
+    // async refreshToken(refreshtoken) {
+    //     try {
+    //         const { data } = await this.jwtService.verify(refreshtoken, {
+    //             secret: jwtConstants.secret,
+    //         });
+    //         const access_token = await this.jwtService.signAsync(
+    //             { data },
+    //             {
+    //                 secret: jwtConstants.secret,
+    //                 expiresIn: jwtConstants.expiresIn,
+    //             },
+    //         );
+    //         const refresh_token = await this.jwtService.signAsync(
+    //             { data },
+    //             {
+    //                 secret: jwtConstants.secret,
+    //                 expiresIn: jwtConstants.refresh_expiresIn,
+    //             },
+    //         );
+    //         return {
+    //             data: {
+    //                 accessToken: access_token,
+    //                 expiresIn: jwtConstants.expiresIn,
+    //                 refresh_token: refresh_token,
+    //                 refresh_expiresIn: jwtConstants.refresh_expiresIn,
+    //                 profile: {
+    //                     role: data.role,
+    //                 }
+    //             }
+    //         }
+    //     } catch (e) {
+    //         throw new UnauthorizedException("Hết phiên đăng nhập. vui lòng đăng nhập lại");
+    //     }
+    // }
 
 }

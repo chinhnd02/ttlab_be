@@ -41,13 +41,18 @@ async function bootstrap() {
         }),
     });
     app.use(helmet());
+
     const configService = app.get(ConfigService);
-    const whiteList = configService.get(ConfigKey.CORS_WHITELIST) || '*';
+    // const whiteList = configService.get(ConfigKey.CORS_WHITELIST) || '*';
+    // const whiteList = process.env.CORS_WHITELIST;
+    const whiteList = "http://localhost:5173";
+
     const corsOptions: CorsOptions = {
-        origin:
-            whiteList?.split(',')?.length > 1
-                ? whiteList.split(',')
-                : whiteList,
+        // origin:
+        //     whiteList?.split(',')?.length > 1
+        //         ? whiteList.split(',')
+        //         : whiteList,
+        origin: whiteList,
         allowedHeaders: [
             'Content-Type',
             'Authorization',
@@ -59,6 +64,8 @@ async function bootstrap() {
         ],
         optionsSuccessStatus: 200,
         methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+
+        credentials: true, //Cho phep gui cookie khi yeu cau cors
     };
     app.enableCors(corsOptions);
 

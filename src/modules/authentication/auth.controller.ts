@@ -11,14 +11,9 @@ import { User } from "@/database/schemas/user.schema";
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @HttpCode(HttpStatus.OK)
+    // @HttpCode(HttpStatus.OK)
     @Post('login')
     async signIn(@Body() signInDto: Record<string, any>) {
-
-
-        // const matchPassword = await bcrypt.compare(signInDto.password, )
-
-
         return this.authService.signIn(signInDto.email, signInDto.password);
     }
 
@@ -29,10 +24,32 @@ export class AuthController {
         return req.user
     }
 
-    @Post('refreshToken')
-    async refresh(@Body() signInDto: Record<string, any>) {
-        console.log(signInDto.refreshToken);
+    // @Post('refresh-token')
+    // async refreshToken(@Body() refreshToken: string) {
+    //     // console.log(signInDto.refreshToken);
 
-        return this.authService.refreshToken(signInDto.refreshToken)
+    //     return this.authService.refreshToken(refreshToken)
+    // }
+
+    // @Post('refresh')
+    // async refresh(@Body() body: any) {
+    //     return this.authService.refreshToken(body.refresh_token)
+    // }
+
+
+    @Post('refresh')
+    async sendRefreshToken(@Body() body: any) {
+        try {
+            const decodedToken = await this.authService.verifyToken(body.refresh_token);
+            if (decodedToken) {
+                const newRefreshToken = await this.authService.refreshToken(body.refresh_token);
+                return newRefreshToken;
+            } else {
+                throw new UnauthorizedException('Invalid refresh token');
+            }
+        } catch (error) {
+            console.log(error);
+            ;
+        }
     }
 }
