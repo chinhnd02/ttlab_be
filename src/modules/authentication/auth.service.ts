@@ -81,6 +81,8 @@ export class AuthService {
                 secret: jwtConstants.secret
             })
 
+            const user = await this.userService.findOne(email);
+
             const payload = {
                 sub, name, email, role
             };
@@ -96,11 +98,14 @@ export class AuthService {
             })
             const expiresIn = jwtConstants.expiresIn
             const refresh_expiresIn = jwtConstants.refresh_expiresIn
+            const roles = user.roles
+            // const role = 
             return {
                 newAccessToken: newAccessToken,
                 newRefreshToken: newRefreshToken,
                 expiresIn: expiresIn,
                 refreshExpiresIn: refresh_expiresIn,
+                roles: roles
             }
         } catch (e) {
             throw new UnauthorizedException('Dang nhap lai')
