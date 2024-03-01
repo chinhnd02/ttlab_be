@@ -45,14 +45,14 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
     // const whiteList = configService.get(ConfigKey.CORS_WHITELIST) || '*';
     // const whiteList = process.env.CORS_WHITELIST;
-    const whiteList = "http://localhost:5173";
+    const whiteList = "*";
 
     const corsOptions: CorsOptions = {
-        // origin:
-        //     whiteList?.split(',')?.length > 1
-        //         ? whiteList.split(',')
-        //         : whiteList,
-        origin: whiteList,
+        origin:
+            whiteList?.split(',')?.length > 1
+                ? whiteList.split(',')
+                : whiteList,
+        // origin: whiteList,
         allowedHeaders: [
             'Content-Type',
             'Authorization',
